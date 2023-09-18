@@ -158,6 +158,7 @@ function RouterConfig() {
     <Suspense fallback={<PreLoader />}>
       <Routes>
         <Route path="/login" element={<Register />} />
+        <Route path='/:?' element={<Register />} />
         <Route
           path="/operating-system-error"
           element={<OperatingSystemErrorPage />}
@@ -303,7 +304,8 @@ export default RouterConfig;
 
 function PrivateOutlet() {
   const { token } = useLoginContext();
-  return token ? <Outlet /> : <Navigate to="/login" />;
+  console.log('token',token)
+  return token ? <Outlet /> : <Navigate to="/?id=" />;
 }
 
 function WithLayout1() {

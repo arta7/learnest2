@@ -936,6 +936,7 @@ function Register() {
   // DRAWERS STYLE
   const classes = useStyles();
   const [phoneNum, set_phoneNum] = useState("");
+  const[currentuuid,setcurrentuuid] = useState('')
   // LOADING METHODS
   const { handleClose, handleOpen } = useLoadingContext();
 
@@ -1005,6 +1006,25 @@ function Register() {
   };
 
 
+  useEffect(()=>{
+    window.ewano.onWebAppReady();
+
+
+     var myOldUrl = window.location.href;
+     console.log('term 1 : ',myOldUrl)
+    if(myOldUrl.split('id=').length>1)
+    {
+    setcurrentuuid(myOldUrl.split('id=')[1])
+    }
+
+  //    window.addEventListener('load', function(){
+
+  //  console.log('term1 : ',myOldUrl)
+  //      // window.history.pushState({}, null, myOldUrl);
+  //    });
+   
+
+ },[])
 
 
   /////==============================////////////
@@ -1126,6 +1146,8 @@ function Register() {
     set__show_veifyDrawer(!show_veifyDrawer);
   };
 
+  
+
   const handleResendCode = async () => {
     //start loading
     handleOpen();
@@ -1198,21 +1220,27 @@ function Register() {
     handleOpen();
 
     //call api login
-    await loginevano('0567286f-24c3-4997-954c-8b52f8b0a237')
+    await loginevano(currentuuid)
       .then((resp) => {
         if (resp.status === 200) {
           
-          if (parseInt(resp.data.status) == 0) {
+          if (resp.data?.data != null) {
             toast.success("به لرنست خوش آمدید .");
             handle_setToken(resp.data?.data?.token);
+            
             navigate("/", { replace: true });
-            console.log('Login')
+            console.log('Login :',resp)
           } else {
-            toast.error("کد وارد شده اشتباه میباشد .");
+            toast.error(resp.data.message);
+            console.log('Login :',resp)
+
           }
         } else {
           toast.error("ورود به حساب با خطا مواجه شد");
         }
+
+        return resp;
+
       })
       .catch((ex) => {
         console.log(ex);

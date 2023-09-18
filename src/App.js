@@ -19,12 +19,14 @@ const safeAreaInsets = require("safe-area-insets");
 
 function App() {
   const { width: windowInnerWidth } = useWindowDimensions();
-  useEffect(()=>{
-    window.ewano.onWebAppReady();
-    const queryParams = new URLSearchParams("https://ewano.learnest.app/?id=")
-    const term = queryParams.get("id")
-    console.log('term : ',term)
-  },[])
+  // useEffect(()=>{
+  //   window.ewano.onWebAppReady();
+  //   const queryParams = new URLSearchParams("https://ewano.learnest.app/?id=")
+  //   const term = queryParams.get("id")
+  //   console.log('term : ',term)
+
+  
+
   // useEffect(() => {
   //   alert(JSON.stringify(safeAreaInsets));
   // }, [safeAreaInsets]);
