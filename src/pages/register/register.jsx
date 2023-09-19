@@ -1224,8 +1224,9 @@ function Register() {
       .then((resp) => {
         if (resp.status === 200) {
           
-          if (resp.data?.data != null) {
+          if (resp.data?.data !== null) {
             toast.success("به لرنست خوش آمدید .");
+            
             handle_setToken(resp.data?.data?.token);
             
             navigate("/", { replace: true });

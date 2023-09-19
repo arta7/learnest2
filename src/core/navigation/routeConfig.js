@@ -158,7 +158,7 @@ function RouterConfig() {
     <Suspense fallback={<PreLoader />}>
       <Routes>
         <Route path="/login" element={<Register />} />
-        <Route path='/:?' element={<Register />} />
+        <Route path=":\?id=" element={<Register />} />
         <Route
           path="/operating-system-error"
           element={<OperatingSystemErrorPage />}
@@ -173,6 +173,7 @@ function RouterConfig() {
         />
         <Route path="/browser-error" element={<BrowserProblemPage />} />
         <Route path="/" element={<PrivateOutlet />}>
+       
           <Route path="/" element={<WithLayout1 />}>
             <Route path="/" element={<LandingPage />} />
             <Route path="/allcourses" element={<CoursesPage />} />
