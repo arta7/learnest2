@@ -154,11 +154,14 @@ const FolderQuestions = lazy(() =>
   import("../../pages/folder-questions/folderQuestions")
 );
 function RouterConfig() {
+  const { token } = useLoginContext();
   return (
     <Suspense fallback={<PreLoader />}>
       <Routes>
-        <Route path="/login" element={<Register />} />
-        <Route path=":\?id=" element={<Register />} />
+        {/* <Route path="/login" element={<Register />} /> */}
+        <Route path={!token ? '/:?' : '/:id'} element={<Register />} />
+
+        <Route path={'/:id'} element={<Register />} />
         <Route
           path="/operating-system-error"
           element={<OperatingSystemErrorPage />}

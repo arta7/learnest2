@@ -41,6 +41,17 @@ const BuyCourseFourthPage = (props) => {
     console.log(factor);
   }, [factor]);
 
+
+   let runWindow=(amount,id)=>{
+      window.ewano.onWebAppReady();
+              // 
+              window.ewano.pay(amount,id, '?testpayment')
+
+              window.ewano.paymentResult = (status) => { 
+                console.log('status : ',status)
+              }
+    }
+
   //2
   useEffect(() => {
     dispatchFactor({ type: actions.SETISTEMP, payload: true });
@@ -176,8 +187,10 @@ const BuyCourseFourthPage = (props) => {
               handleClose();
             },
             onSuccess: (resp) => {
-              paymentGateLink_ref.current.href = resp.data.data;
-              paymentGateLink_ref.current.click();
+              console.log('response buy',resp?.data?.data)
+              runWindow(resp?.data?.data?.amount, resp?.data?.data?.id)
+              // paymentGateLink_ref.current.href = resp.data.data;
+              // paymentGateLink_ref.current.click();
             },
             onEnd: handleClose,
           });
