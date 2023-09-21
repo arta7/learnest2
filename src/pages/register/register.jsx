@@ -842,7 +842,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 // CONTEXTS
 import {
-  useLoginContext,
+  useLoginContext2,
   useAuthenticationActions,
 } from "../../core/contexts/authentication/authenticationProvider";
 import { useLoadingContext } from "../../core/contexts/loading/loading";
@@ -1017,13 +1017,6 @@ function Register() {
     setcurrentuuid(myOldUrl.split('id=')[1])
     }
 
-  //    window.addEventListener('load', function(){
-
-  //  console.log('term1 : ',myOldUrl)
-  //      // window.history.pushState({}, null, myOldUrl);
-  //    });
-   
-
  },[])
 
 
@@ -1135,7 +1128,7 @@ function Register() {
 
   const [show_veifyDrawer, set__show_veifyDrawer] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
-  const { handle_setToken } = useAuthenticationActions();
+  const { handle_setToken,handle_setaddress } = useAuthenticationActions();
   const [compeleted, set_compeleted] = useState();
   const countdownRef = useRef();
 
@@ -1195,6 +1188,7 @@ function Register() {
             toast.success("به لرنست خوش آمدید .");
             handle_setToken(resp.data?.data?.token);
             navigate("/", { replace: true });
+          
           } else {
             toast.error("کد وارد شده اشتباه میباشد .");
           }
@@ -1231,6 +1225,7 @@ function Register() {
             
             navigate("/", { replace: true });
             console.log('Login :',resp)
+            handle_setaddress("2")
           } else {
             toast.error(resp.data.message);
             console.log('Login :',resp)

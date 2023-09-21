@@ -1,8 +1,8 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense,useEffect ,useState} from "react";
 // import { Switch, Route} from "react-router";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 
-import { useLoginContext } from "../contexts/authentication/authenticationProvider";
+import { useLoginContext,useLoginContext2,useAuthenticationActions } from "../contexts/authentication/authenticationProvider";
 import ClassRoomProvider from "../contexts/classRoom/classRoom";
 import BuyCourseContext from "../contexts/buyCourseContext/buyCourseContext";
 import PreLoader from "../../components/preloader/preloader";
@@ -25,7 +25,6 @@ import DeviceCompabilityOutlet from "./deviceCompailityOutlet";
 import WithTextSelection from "../../components/withTextSelection.hoc";
 import { Button } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
 import { flushSync } from "react-dom";
 import { isIos } from "../utils/utils";
 import ServerUpdate from "../../pages/server-error(application-on-update)";
@@ -154,14 +153,21 @@ const FolderQuestions = lazy(() =>
   import("../../pages/folder-questions/folderQuestions")
 );
 function RouterConfig() {
-  const { token } = useLoginContext();
+  const { address } = useLoginContext2();
+  const { handle_setaddress } = useAuthenticationActions();
+  useEffect(()=>{
+
+    handle_setaddress("1")
+    
+
+ },[])
   return (
     <Suspense fallback={<PreLoader />}>
       <Routes>
         {/* <Route path="/login" element={<Register />} /> */}
-        <Route path={!token ? '/:?' : '/:id'} element={<Register />} />
-
-        <Route path={'/:id'} element={<Register />} />
+      
+        <Route path={address == '1' ? '/:?' : '/?id='   } element={<Register />} />
+        {/* <Route path={'/?id'} element={<Register />} /> */}
         <Route
           path="/operating-system-error"
           element={<OperatingSystemErrorPage />}
@@ -277,6 +283,7 @@ function RouterConfig() {
               <Route path="/folder-questions/:bid" element={<FolderQuestions />} />
             </Route>
           </Route>
+         
         </Route>
         {/* End Courses's Routes */}
         {/* <Route path="/test" element={<QuestionsIterator />} /> */}
@@ -298,6 +305,7 @@ function RouterConfig() {
         <Route path="/server-update" element={<ServerUpdate />} />
         <Route path="/notfound" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
+       
         {/* <Route path="/" element={<DeviceCompabilityOutlet />}> */}
       </Routes>
     </Suspense>
