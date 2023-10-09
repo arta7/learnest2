@@ -92,6 +92,7 @@ export const UserLoginProvider = ({ children }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [token, setToken] = useState(http?.getToken() || "");
   const [address, setaddress] = useState("1");
+  const [factorId, setFactorId] = useState("");
 
   return (
     <UserLoginContext.Provider
@@ -100,10 +101,12 @@ export const UserLoginProvider = ({ children }) => {
         phoneNumber,
         token,
         address,
+        factorId,
         setStatus,
         setPhoneNumber,
         setToken,
         setaddress,
+        setFactorId,
       }}
     >
       {children}
@@ -119,9 +122,14 @@ function useLoginContext2() {
   return useContext(UserLoginContext);
 }
 
+function useFactor() {
+  return useContext(UserLoginContext);
+}
+
 function useAuthenticationActions() {
   const { setToken } = useLoginContext();
   const { setaddress } = useLoginContext2();
+  const { setFactorId } = useFactor();
 
   const login = async (phoneNumber1,IsPhone) => {
     return authentication_apiCalls.apiCall_login(phoneNumber1,IsPhone);
@@ -171,9 +179,13 @@ function useAuthenticationActions() {
     setaddress(addres);
   };
 
-  return { login, verify, register, handle_setToken, logout,loginevano,handle_setaddress };
+  const handle_setFactor = (factor) => {
+    setFactorId(factor);
+  };
+
+  return { login, verify, register, handle_setToken, logout,loginevano,handle_setaddress,handle_setFactor };
 }
 
-export { useLoginContext, useAuthenticationActions,useLoginContext2 };
+export { useLoginContext, useAuthenticationActions,useLoginContext2,useFactor };
 export default UserLoginProvider;
 

@@ -16,6 +16,8 @@ import { useLocation, useNavigate } from "react-router";
 import { formatNumber } from "../../../../core/utils/formatPrice";
 import InfoIcon from "@mui/icons-material/Info";
 import { CheckCircle } from "@mui/icons-material";
+import { useFactor,useAuthenticationActions } from "./../../../../core/contexts/authentication/authenticationProvider";
+
 
 const BuyCourseFourthPage = (props) => {
   const paymentGateLink_ref = useRef();
@@ -29,6 +31,7 @@ const BuyCourseFourthPage = (props) => {
   } = useLoadingContext();
   const [finalAmount, set_finalAmount] = useState();
   const navigate = useNavigate();
+  const { handle_setFactor } = useAuthenticationActions()
 
   const handlRefferCodeChange = (e) => {
     const { value } = e.target;
@@ -45,8 +48,8 @@ const BuyCourseFourthPage = (props) => {
    let runWindow=(amount,id)=>{
       window.ewano.onWebAppReady();
               // 
-              window.ewano.pay(amount,id, '?testpayment')
-
+              
+              window.ewano.pay(amount,id, '')
               window.ewano.paymentResult = (status) => { 
                 console.log('status : ',status)
               }
@@ -177,6 +180,8 @@ const BuyCourseFourthPage = (props) => {
         set_finalAmount(response?.data?.data?.finalAmount);
 
         if (!factorClone.isTemp) {
+          handle_setFactor(response?.data?.data?.factorId)
+          // console.log('response?.data?.data?.factorId',response?.data?.data?.factorId)
           apiCaller({
             api: buyCourse_apiCalls.apiCall_paycoursefactor,
             apiArguments: response?.data?.data?.factorId,

@@ -65,6 +65,12 @@ const FaqQuestions = lazy(() =>
     "../../pages/courses/CourseDetail--Faqs/components/FaqQuestions/FaqQuestions"
   )
 );
+const BuyCourseReturn = lazy(() =>
+  import(
+    "../../pages/courses/buyCoursePages/buyCourse-return"
+  )
+);
+
 
 const GrammarRC = lazy(() =>
   import("../../pages/courses/CourseDetail--Grammar/GrammarRC")
@@ -164,6 +170,7 @@ function RouterConfig() {
   return (
     <Suspense fallback={<PreLoader />}>
       <Routes>
+      <Route path="/shippment" element={<BuyCourseReturn />} />  
         {/* <Route path="/login" element={<Register />} /> */}
       
         <Route path={address == '1' ? '/:?' : '/?id='   } element={<Register />} />
@@ -180,6 +187,8 @@ function RouterConfig() {
           path="/android-installation-guide"
           element={<AndroidInstallationGuidePage />}
         />
+
+     
         <Route path="/browser-error" element={<BrowserProblemPage />} />
         <Route path="/" element={<PrivateOutlet />}>
        

@@ -64,6 +64,7 @@ export const API_URLs = {
     deleteInvitement: baseUrl + "/courses/deleteinvitetoclasssroom",
     rejectInvitement: baseUrl + "/courses/rejectinvitetoclasssroom",
     checkoutRefferCode: baseUrl + "/courses/checkreffercode",
+    verifyPayment : baseUrl + "/ewano/verifycoursefactor",
   },
   exam: {
     getExam: baseUrl + "/courses/getexam",
