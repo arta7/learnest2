@@ -24,70 +24,78 @@ import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
 const BuyCourceReturn = (props) => {
-        const[Status,setStatus] = useState(false)
-        const { factorId } = useFactor();
-        const navigate = useNavigate();
-        const {
-          handleOpen,
-          handleClose,
-          openLoading: isLoading,
-        } = useLoadingContext();
+  const [Status, setStatus] = useState(false)
+  const { factorId } = useFactor();
+  const navigate = useNavigate();
+  const {
+    handleOpen,
+    handleClose,
+    openLoading: isLoading,
+  } = useLoadingContext();
 
-    useEffect(()=>{
-        window.ewano.onWebAppReady();
+  useEffect(() => {
+    window.ewano.onWebAppReady();
 
-        // apiCaller({
-        //   api: buyCourse_apiCalls.apiCall_verifycoursefactor,
-        //   apiArguments:  factorId,
-        //   onError: (ex) => {
-        //     // if (ex?.response?.data?.message) {
-        //     //   toast.error(ex?.response?.data?.message);
-        //     // }
-        //      handleClose();
-        //   },
-        //   onSuccess: (resp) => {
-        //    setStatus(true)
-        //    toast.success(
-        //     <div className="text-wrap">
-        //     {"دوره برای شما با موفقیت فعال شد"}
-        //     </div>
-        //     );
-        //  navigate('/allcourses')
-        //   },
-        //   onEnd: handleClose,
-        // })
-        
-        window.ewano.paymentResult = (status) => { 
-            console.log('status : ',status)
-            alert('status : ',status)
+    // apiCaller({
+    //   api: buyCourse_apiCalls.apiCall_verifycoursefactor,
+    //   apiArguments:  factorId,
+    //   onError: (ex) => {
+    //     // if (ex?.response?.data?.message) {
+    //     //   toast.error(ex?.response?.data?.message);
+    //     // }
+    //      handleClose();
+    //   },
+    //   onSuccess: (resp) => {
+    //    setStatus(true)
+    //    toast.success(
+    //     <div className="text-wrap">
+    //     {"دوره برای شما با موفقیت فعال شد"}
+    //     </div>
+    //     );
+    //  navigate('/allcourses')
+    //   },
+    //   onEnd: handleClose,
+    // })
+
+    window.ewano.paymentResult = (status) => {
+      console.log('status : ', status)
+      alert('status : ', status)
+      setStatus(status)
+      if (status) {
+        apiCaller({
+          api: buyCourse_apiCalls.apiCall_verifycoursefactor,
+          apiArguments: factorId,
+          onError: (ex) => {
+            if (ex?.response?.data?.message) {
+              toast.error(ex?.response?.data?.message);
+            }
+            handleClose();
+          },
+          onSuccess: (resp) => {
             setStatus(true)
+            toast.success(
+              <div className="text-wrap">
+                {resp?.response?.data?.message}
+              </div>
+            );
+            navigate('/allcourses')
+          },
+          onEnd: handleClose,
+        })
+      }
+      else {
 
-            apiCaller({
-              api: buyCourse_apiCalls.apiCall_verifycoursefactor,
-              apiArguments:  factorId,
-              onError: (ex) => {
-                if (ex?.response?.data?.message) {
-                  toast.error(ex?.response?.data?.message);
-                }
-                 handleClose();
-              },
-              onSuccess: (resp) => {
-               setStatus(true)
-               toast.success(
-                <div className="text-wrap">
-                {"دوره برای شما با موفقیت فعال شد"}
-                </div>
-                );
-             navigate('/allcourses')
-              },
-              onEnd: handleClose,
-            })
-
-          }
+      }
+      toast.success(
+        <div className="text-wrap">
+          {"پرداخت شما  با مشکل مواجه شده در صورت نیاز به راهنمایی با پشتیانی تماس بگیرید."}
+        </div>
+      );
+    }
 
 
 
-    },[])
+  }, [])
 
   ////////
   return (
@@ -95,14 +103,14 @@ const BuyCourceReturn = (props) => {
       dir="rtl"
       className="w-100 h-100-vh p-xxl-4 flex-grow-1 p-3 m-0 d-flex flex-column justify-content-center align-items-stretch"
     >
-     
+
       <h1
         className="fs-5 fw-bold mt-4 text-justify"
         style={{
           lineHeight: "1.7",
         }}
       >
-       پرداخت با موفقیت انجام شد و دوره برای شما فعال می شود
+        پرداخت با موفقیت انجام شد و دوره برای شما فعال می شود
       </h1>
     </div>
   );

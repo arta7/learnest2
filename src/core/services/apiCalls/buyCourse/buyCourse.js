@@ -65,7 +65,7 @@ export const apiCall_paycoursefactor = (factorId) => {
 };
 
 export const apiCall_verifycoursefactor = (factorId) => {
-  return http.post(buyCourse_apis.verifyPayment + "?factorId=" + factorId + "&isPaid="+true);
+  return http.post(buyCourse_apis.verifyPayment + "?factorId=" + factorId);
 };
 
 export const apiCall_deleteInvitement = (body) => {
