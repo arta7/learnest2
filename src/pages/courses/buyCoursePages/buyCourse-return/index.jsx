@@ -84,13 +84,15 @@ const BuyCourceReturn = (props) => {
         })
       }
       else {
+        toast.success(
+          <div className="text-wrap">
+            {"پرداخت شما  با مشکل مواجه شده در صورت نیاز به راهنمایی با پشتیانی تماس بگیرید."}
+          </div>
+        );
+        navigate('/allcourses')
 
       }
-      toast.success(
-        <div className="text-wrap">
-          {"پرداخت شما  با مشکل مواجه شده در صورت نیاز به راهنمایی با پشتیانی تماس بگیرید."}
-        </div>
-      );
+      
     }
 
 
