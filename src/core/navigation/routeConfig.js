@@ -170,7 +170,7 @@ function RouterConfig() {
   return (
     <Suspense fallback={<PreLoader />}>
       <Routes>
-      <Route path="/shippment" element={<BuyCourseReturn />} />  
+      <Route path="/shippment/:s" element={<BuyCourseReturn />} />  
         {/* <Route path="/login" element={<Register />} /> */}
       
         <Route path={address == '1' ? '/:?' : '/?id='   } element={<Register />} />

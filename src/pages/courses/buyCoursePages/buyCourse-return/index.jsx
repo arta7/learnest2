@@ -25,7 +25,7 @@ import { toast } from "react-toastify";
 
 const BuyCourceReturn = (props) => {
   const [Status, setStatus] = useState(false)
-  const { factorId } = useFactor();
+  // const { factorId } = useFactor();
   const navigate = useNavigate();
   const {
     handleOpen,
@@ -34,51 +34,59 @@ const BuyCourceReturn = (props) => {
   } = useLoadingContext();
 
   useEffect(() => {
+    var factorId =   localStorage.getItem("factorId")
+    // console.log('factorId : > ',factorId)
     window.ewano.onWebAppReady();
 
     // apiCaller({
     //   api: buyCourse_apiCalls.apiCall_verifycoursefactor,
-    //   apiArguments:  factorId,
+    //   apiArguments: factorId,
     //   onError: (ex) => {
-    //     // if (ex?.response?.data?.message) {
-    //     //   toast.error(ex?.response?.data?.message);
-    //     // }
-    //      handleClose();
+    //     if (ex?.data?.message) {
+    //       toast.error(ex?.data?.message);
+    //     }
+    //     handleClose();
     //   },
     //   onSuccess: (resp) => {
-    //    setStatus(true)
-    //    toast.success(
-    //     <div className="text-wrap">
-    //     {"دوره برای شما با موفقیت فعال شد"}
-    //     </div>
+    //     setStatus(true)
+    //     console.log('resp?.response?.data',resp?.data?.message)
+    //     toast.success(
+    //       <div className="text-wrap">
+    //         {resp?.data?.message}
+    //       </div>
     //     );
-    //  navigate('/allcourses')
+    //     navigate('/allcourses')
     //   },
     //   onEnd: handleClose,
     // })
 
     window.ewano.paymentResult = (status) => {
       console.log('status : ', status)
-      alert('status : ', status)
+      // alert('status : ', status)
       setStatus(status)
       if (status) {
         apiCaller({
           api: buyCourse_apiCalls.apiCall_verifycoursefactor,
           apiArguments: factorId,
           onError: (ex) => {
-            if (ex?.response?.data?.message) {
-              toast.error(ex?.response?.data?.message);
+            localStorage.removeItem("factorId");
+            if (ex?.data?.message) {
+              toast.error(ex?.data?.message);
             }
+
             handleClose();
           },
           onSuccess: (resp) => {
             setStatus(true)
-            toast.success(
-              <div className="text-wrap">
-                {resp?.response?.data?.message}
-              </div>
-            );
+            console.log('resp?.response?.data',resp?.data?.message)
+        toast.success(
+          <div className="text-wrap">
+            {resp?.data?.message}
+          </div>
+        );
+        localStorage.removeItem("factorId");
             navigate('/allcourses')
+
           },
           onEnd: handleClose,
         })
@@ -112,7 +120,7 @@ const BuyCourceReturn = (props) => {
           lineHeight: "1.7",
         }}
       >
-        پرداخت با موفقیت انجام شد و دوره برای شما فعال می شود
+       
       </h1>
     </div>
   );

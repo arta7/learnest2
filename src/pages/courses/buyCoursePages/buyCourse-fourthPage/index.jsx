@@ -48,8 +48,8 @@ const BuyCourseFourthPage = (props) => {
    let runWindow=(amount,id)=>{
       window.ewano.onWebAppReady();
               // 
-              
-              window.ewano.pay(amount,id, '')
+              // navigate('/shippment/shippment')
+              window.ewano.pay(amount*10,id, '/shippment')
               window.ewano.paymentResult = (status) => { 
                 console.log('status : ',status)
               }
@@ -181,6 +181,7 @@ const BuyCourseFourthPage = (props) => {
 
         if (!factorClone.isTemp) {
           handle_setFactor(response?.data?.data?.factorId)
+          localStorage.setItem("factorId", response?.data?.data?.factorId)
           // console.log('response?.data?.data?.factorId',response?.data?.data?.factorId)
           apiCaller({
             api: buyCourse_apiCalls.apiCall_paycoursefactor,
