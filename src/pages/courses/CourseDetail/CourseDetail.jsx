@@ -26,6 +26,7 @@ const CourseDetail = () => {
       .post(`${sessionUrl}${id}`, null, {
         headers: {
           Authorization: token,
+          Version: "ewano"
         },
       })
       .then((resp) => {

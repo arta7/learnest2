@@ -35,27 +35,32 @@ const BuyCourceReturn = (props) => {
 
   useEffect(() => {
     var factorId =   localStorage.getItem("factorId")
-    // console.log('factorId : > ',factorId)
+     console.log('factorId : > ',factorId)
     window.ewano.onWebAppReady();
 
     // apiCaller({
     //   api: buyCourse_apiCalls.apiCall_verifycoursefactor,
     //   apiArguments: factorId,
     //   onError: (ex) => {
+    //     localStorage.removeItem("factorId");
+    //     console.log('ex',ex)
     //     if (ex?.data?.message) {
     //       toast.error(ex?.data?.message);
     //     }
+
     //     handleClose();
     //   },
     //   onSuccess: (resp) => {
     //     setStatus(true)
     //     console.log('resp?.response?.data',resp?.data?.message)
-    //     toast.success(
-    //       <div className="text-wrap">
-    //         {resp?.data?.message}
-    //       </div>
-    //     );
+    // toast.success(
+    //   <div className="text-wrap">
+    //     {resp?.data?.message}
+    //   </div>
+    // );
+    // localStorage.removeItem("factorId");
     //     navigate('/allcourses')
+
     //   },
     //   onEnd: handleClose,
     // })
@@ -64,12 +69,13 @@ const BuyCourceReturn = (props) => {
       console.log('status : ', status)
       // alert('status : ', status)
       setStatus(status)
-      if (status) {
+      if (status == true) {
         apiCaller({
           api: buyCourse_apiCalls.apiCall_verifycoursefactor,
           apiArguments: factorId,
           onError: (ex) => {
             localStorage.removeItem("factorId");
+            console.log('ex',ex)
             if (ex?.data?.message) {
               toast.error(ex?.data?.message);
             }

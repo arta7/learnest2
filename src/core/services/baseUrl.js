@@ -1,6 +1,6 @@
-export const baseUrl = "https://demo.learnest.app/api";
-export const imagesBaseUrl = "https://demo.learnest.app/";
-export const chathubUrl = "https://demo.learnest.app/chatHub";
+export const baseUrl = "https://learnest.app/api";
+export const imagesBaseUrl = "https://learnest.app/";
+export const chathubUrl = "https://learnest.app/chatHub";
 export const fileBaseUrl = "https://dl.learnest.app/";
 
 // export const extramediasBaseUrl =

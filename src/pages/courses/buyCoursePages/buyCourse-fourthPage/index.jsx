@@ -48,10 +48,49 @@ const BuyCourseFourthPage = (props) => {
    let runWindow=(amount,id)=>{
       window.ewano.onWebAppReady();
               // 
-              // navigate('/shippment/shippment')
-              window.ewano.pay(amount*10,id, '/shippment')
+              //  navigate('/shippment')
+              window.ewano.pay(amount*10,id, '')
               window.ewano.paymentResult = (status) => { 
-                console.log('status : ',status)
+                var factorId =   localStorage.getItem("factorId")
+                console.log('factorId2 : > ',factorId)
+                console.log('status2 : ',status)
+                if (status == true) {
+                  apiCaller({
+                    api: buyCourse_apiCalls.apiCall_verifycoursefactor,
+                    apiArguments: factorId,
+                    onError: (ex) => {
+                      localStorage.removeItem("factorId");
+                      console.log('ex',ex)
+                      if (ex?.data?.message) {
+                        toast.error(ex?.data?.message);
+                      }
+          
+                      handleClose();
+                    },
+                    onSuccess: (resp) => {
+                     
+                      console.log('resp?.response?.data',resp?.data?.message)
+                  toast.success(
+                    <div className="text-wrap">
+                      {resp?.data?.message}
+                    </div>
+                  );
+                  localStorage.removeItem("factorId");
+                      navigate('/allcourses')
+          
+                    },
+                    onEnd: handleClose,
+                  })
+                }
+                else {
+                  toast.success(
+                    <div className="text-wrap">
+                      {"پرداخت شما  با مشکل مواجه شده در صورت نیاز به راهنمایی با پشتیانی تماس بگیرید."}
+                    </div>
+                  );
+                  navigate('/allcourses')
+          
+                }
               }
     }
 

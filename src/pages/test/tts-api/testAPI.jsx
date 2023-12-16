@@ -37,7 +37,7 @@ const TestAPI = (props) => {
       <button onClick={handlePlay}>Play2</button>
       <audio
         ref={audioRef}
-        src="https://demo.learnest.app/uploads/extramedias/9b3c4ffc-c918-42b3-ad3d-03196ca24d34.mp3"
+        src="https://learnest.app/uploads/extramedias/9b3c4ffc-c918-42b3-ad3d-03196ca24d34.mp3"
         onLoadStart={() => {
           setLoading(true);
         }}

@@ -19,6 +19,7 @@ const CoursesPage = () => {
         headers: {
           // authorization: localStorage.getItem("learnestToken"),
           "Cache-Control": "public,max-age=1, stale-while-revalidate=119",
+          "Version": "ewano"
         },
       })
       .then((resp) => {

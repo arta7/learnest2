@@ -62,6 +62,7 @@ axios.interceptors.response.use(
 
 axios.interceptors.request.use((config) => {
   config.headers["Authorization"] = getItem(tokenKey);
+  config.headers["Version"] = "ewano";
   return config;
 });
 
